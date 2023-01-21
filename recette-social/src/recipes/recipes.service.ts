@@ -1,15 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Recipe, RecipeDocument } from './schemas/recipe.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
-export class RecipesService {
+export class RecipeService {
+  constructor(
+    @InjectModel(Recipe.name)
+    private readonly recipeModel: Model<RecipeDocument>,
+  ) {}
+
   create(createRecipeDto: CreateRecipeDto) {
-    return 'This action adds a new recipe';
+    return this.recipeModel.create(createRecipeDto);
   }
 
-  findAll() {
-    return `This action returns all recipes`;
+  findAll(): Promise<Recipe[]> {
+    return this.recipeModel.find().exec();
   }
 
   findOne(id: number) {
@@ -21,6 +30,6 @@ export class RecipesService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} recipe`;
+    return `This action removes a #${id} book`;
   }
 }
