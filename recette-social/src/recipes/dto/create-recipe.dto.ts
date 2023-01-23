@@ -65,4 +65,9 @@ export class CreateRecipeDto {
     example: 'easy',
   })
   difficulty: string;
+
+  @ApiProperty({
+    example: 15,
+  })
+  recipe_Id: number;
 }

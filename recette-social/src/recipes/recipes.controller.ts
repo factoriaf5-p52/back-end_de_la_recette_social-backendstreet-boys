@@ -26,9 +26,9 @@ export class RecipesController {
     return this.recipesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.recipesService.findOne(+id);
+  @Get(':recipe_Id')
+  findRecipe(@Param('recipe_Id') recipe_Id: string) {
+    return this.recipesService.findRecipe(recipe_Id);
   }
 
   @Patch(':id')

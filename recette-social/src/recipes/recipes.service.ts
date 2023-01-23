@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -21,8 +21,8 @@ export class RecipeService {
     return this.recipeModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} recipe`;
+  async findRecipe(recipe_Id: string): Promise<Recipe> {
+    return this.recipeModel.findOne({ recipe_Id });
   }
 
   update(id: number, updateRecipeDto: UpdateRecipeDto) {

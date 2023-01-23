@@ -24,6 +24,9 @@ export class Recipe {
 
   @Prop()
   difficulty_level: string;
+
+  @Prop()
+  recipe_Id: number;
 }
 
 export const RecipeSchema = SchemaFactory.createForClass(Recipe);
