@@ -29,7 +29,7 @@ export class RecipeService {
     return `This action updates a #${id} recipe`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async remove(recipe_Id: number) {
+    return this.recipeModel.remove({ recipe_Id});
   }
 }
