@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
   Get,
@@ -36,8 +36,8 @@ export class RecipesController {
     return this.recipesService.update(+id, updateRecipeDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.recipesService.remove(+id);
+  @Delete(':recipe_Id')
+  remove(@Param('recipe_Id') recipe_Id: string) {
+    return this.recipesService.remove(+recipe_Id);
   }
 }
