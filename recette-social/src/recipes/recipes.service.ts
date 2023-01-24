@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Injectable } from '@nestjs/common';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -25,11 +26,24 @@ export class RecipeService {
     return this.recipeModel.findOne({ recipe_Id });
   }
 
-  update(id: number, updateRecipeDto: UpdateRecipeDto) {
-    return `This action updates a #${id} recipe`;
+  async update(recipe_Id: string, newrecipe: UpdateRecipeDto) {
+    try {
+      const recipe = await this.findRecipe(recipe_Id)
+      console.log(recipe)
+      if(recipe!=null){
+        const updateRecipe = Object.assign(recipe,newrecipe);
+        return this.recipeModel.findOneAndUpdate({recipe_Id}, newrecipe,{new: true});
+      }
+      else {
+        throw new Error()
+      }
+    }
+    catch ( error ){
+      console.log(error)
+    }
   }
 
   async remove(recipe_Id: number) {
-    return this.recipeModel.remove({ recipe_Id});
+    return this.recipeModel.remove({ recipe_Id });
   }
 }

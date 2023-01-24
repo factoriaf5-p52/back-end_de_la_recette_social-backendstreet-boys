@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
@@ -11,6 +12,7 @@ import {
 import { RecipeService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
+import { Put } from '@nestjs/common/decorators';
 
 @Controller('recipes')
 export class RecipesController {
@@ -31,9 +33,12 @@ export class RecipesController {
     return this.recipesService.findRecipe(recipe_Id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto) {
-    return this.recipesService.update(+id, updateRecipeDto);
+  @Patch(':recipe_Id')
+  update(
+    @Body() newrecipe: UpdateRecipeDto,
+    @Param('recipe_Id') recipe_Id: string,
+  ) {
+    return this.recipesService.update(recipe_Id, newrecipe);
   }
 
   @Delete(':recipe_Id')
