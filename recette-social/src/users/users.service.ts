@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Body, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from './schemas/user.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectModel(User.name)
+    private readonly userModel: Model<UserDocument>,
+  ) { }
+
+  create(createuserDto: CreateUserDto) {
+    return this.userModel.create(createuserDto);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  findAll(): Promise<User[]> {
+    return this.userModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findUser(user_Id: string): Promise<User> {
+    return this.userModel.findOne({ user_Id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(user_Id: string, newuser: UpdateUserDto) {
+    try {
+      const user = await this.findUser(user_Id)
+      console.log(user)
+      if (user != null) {
+        const updateuser = Object.assign(user, newuser);
+        return this.userModel.findOneAndUpdate({ user_Id }, newuser, { new: true });
+      }
+      else {
+        throw new Error()
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(user_Id: number) {
+    return this.userModel.remove({ user_Id });
   }
 }
