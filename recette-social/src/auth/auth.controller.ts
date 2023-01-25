@@ -11,26 +11,11 @@ export class AuthController {
 
   @Post('register')
   registerUser(@Body() userObject: RegisterAuthDto) {
-    console.log({ body: userObject })
+    return this.authService.register(userObject)
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() registerAuthDto: RegisterAuthDto) {
-    return this.authService.update(+id, registerAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Post('login')
+  loginUser(@Body() userObjectLogin: LoginAuthDto) {
+    return this.authService.login(userObjectLogin)
   }
 }
