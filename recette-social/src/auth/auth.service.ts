@@ -38,7 +38,7 @@ export class AuthService {
     //if dosent match retunr 403
     if (!checkPassword) throw new HttpException('PASSWORD_INVALID', 403)
 
-    //creating a token and setting the user name and id into payload
+    //creating a token and sign it in
     const payload = { id: findUser._id, name: findUser.name }
     const token = await this.jwtService.sign(payload)
 
