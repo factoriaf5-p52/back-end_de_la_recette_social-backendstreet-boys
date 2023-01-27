@@ -1,26 +1,52 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { RegisterAuthDto } from './dto/register-auth.dto';
+import { hash, compare } from 'bcrypt';
+import { InjectModel } from '@nestjs/mongoose';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private jwtService: JwtService
+  ) { }
+
+  async register(userObject: RegisterAuthDto) {
+    //destructuring password and setting onto userObject
+    const { password } = userObject;
+    //encrypt password
+    const plainToHash = await hash(password, 10);
+    //replace password to encrypted password
+    userObject = { ...userObject, password: plainToHash };
+    //create user on db
+    return this.userModel.create(userObject)
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async login(userObjectLogin: LoginAuthDto) {
+    //setting email and password into and object
+    const { email, password } = userObjectLogin
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    //find the user by email, if no user match the email return 404
+    const findUser = await this.userModel.findOne({ email })
+    if (!findUser) throw new HttpException('USER_NOT_FOUND', 404)
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+    //compare the given crypted password with the one in db
+    const checkPassword = await compare(password, findUser.password)
+    //if dosent match retunr 403
+    if (!checkPassword) throw new HttpException('PASSWORD_INVALID', 403)
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    //creating a token and sign it in
+    const payload = { id: findUser._id, name: findUser.name }
+    const token = await this.jwtService.sign(payload)
+
+    //gather all the data and returnign it
+    const data = {
+      user: findUser,
+      token
+    }
+    return data;
   }
 }

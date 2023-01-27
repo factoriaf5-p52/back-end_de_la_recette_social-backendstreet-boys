@@ -8,6 +8,7 @@ async function bootstrap() {
   app.setGlobalPrefix('recette/v1');
 
   const options = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Recette-Social')
     .setDescription('Api rest para recetas y red social')
     .setVersion('1.0')
