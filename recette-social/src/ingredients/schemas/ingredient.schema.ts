@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { refs } from '@nestjs/swagger';
-import { Document, Schema } from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 export type IngredientDocument = Ingredient & Document;
 @Schema()
@@ -12,9 +11,7 @@ export class Ingredient {
   measure_unit: string;
 
   @Prop()
-  recipes: {
-    type: Schema.Types.ObjectId;
-    ref: 'Recipe';
-  };
+  ingredient_Id: string;
 }
+
 export const IngredientSchema = SchemaFactory.createForClass(Ingredient);
