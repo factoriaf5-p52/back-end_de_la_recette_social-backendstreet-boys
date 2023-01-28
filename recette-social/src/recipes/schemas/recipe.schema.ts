@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory, Document } from '@nestjs/mongoose';
 
 
 export type RecipeDocument = Recipe & Document;
@@ -10,7 +9,10 @@ export class Recipe {
   name: string;
 
   @Prop()
-  ingredients: string[];
+  ingredients:[ {
+    type: Schema.Types.ObjectId, 
+    ref:"Ingredient"
+  } ];
 
   @Prop()
   instructions: string[];
