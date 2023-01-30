@@ -27,5 +27,10 @@ export class CreateGroupDto {
     })
     recipes: string[];
 
+    @ApiProperty({
+        example: 'usarios varios'
+    })
+   users: string[]
+
    
 }

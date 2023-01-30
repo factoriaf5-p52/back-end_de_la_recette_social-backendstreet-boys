@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { groupService } from './group.service';
+import { GroupService } from './group.service';
 import { GroupController } from './group.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { group, groupSchema } from './schemas/group.schema';
 
 @Module({
+  imports: [
+    MongooseModule.forFeature([{ name: group.name, schema: groupSchema }]),
+  ],
   controllers: [GroupController],
-  providers: [groupService]
+  providers: [GroupService],
 })
-export class groupModule {}
+export class GroupModule {}

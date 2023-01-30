@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { group, groupDocument } from './schemas/group.schema';
 import { Model } from 'mongoose';
 @Injectable()
-export class groupService {
+export class GroupService {
   constructor(
     @InjectModel(group.name)
     private readonly groupModel: Model<groupDocument>,
@@ -30,7 +30,7 @@ export class groupService {
       console.log(group)
       if (group != null) {
         const updategroup = Object.assign(group, newgroup);
-        return this.groupModel.findOneAndUpdate({ group_Id }, newgroup, { new: true });
+        return this.groupModel.findOneAndUpdate({ group_Id }, updategroup, { new: true });
       }
       else {
         throw new Error()

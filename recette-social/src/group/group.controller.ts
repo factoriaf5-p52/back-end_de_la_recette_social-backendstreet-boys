@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { groupService } from './group.service';
+import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -8,7 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('group')
 @Controller('group')
 export class GroupController {
-  constructor(private readonly groupService: groupService) {}
+  constructor(private readonly groupService: GroupService) {}
 
   @Post()
   create(@Body() createGroupDto: CreateGroupDto) {
