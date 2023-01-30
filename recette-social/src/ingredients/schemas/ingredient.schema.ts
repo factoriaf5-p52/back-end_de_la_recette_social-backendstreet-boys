@@ -10,8 +10,6 @@ export class Ingredient {
   @Prop()
   measure_unit: string;
 
-  @Prop()
-  ingredient_Id: string;
 }
 
 export const IngredientSchema = SchemaFactory.createForClass(Ingredient);

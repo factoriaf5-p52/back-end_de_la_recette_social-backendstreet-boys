@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { IngredientService } from './ingredients.service';
+import { ingredientService } from './ingredients.service';
 import { IngredientsController } from './ingredients.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Ingredient, IngredientSchema } from './schemas/ingredient.schema';
@@ -11,6 +11,6 @@ import { Ingredient, IngredientSchema } from './schemas/ingredient.schema';
     ]),
   ],
   controllers: [IngredientsController],
-  providers: [IngredientService],
+  providers: [ingredientService],
 })
 export class IngredientsModule {}

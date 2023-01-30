@@ -1,13 +1,15 @@
 // eslint-disable-next-line prettier/prettier
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { IngredientService } from './ingredients.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
+import { ingredientService } from './ingredients.service';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+@ApiTags('Ingredients')
 @Controller('ingredients')
 export class IngredientsController {
-  constructor(private readonly ingredientsService: IngredientService) {}
-
+  constructor(private readonly ingredientsService: ingredientService) {}
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createIngredientDto: CreateIngredientDto) {
     return this.ingredientsService.create(createIngredientDto);
@@ -23,6 +25,7 @@ export class IngredientsController {
     return this.ingredientsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -31,6 +34,7 @@ export class IngredientsController {
     return this.ingredientsService.update(id, updateIngredientDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.ingredientsService.remove(+id);

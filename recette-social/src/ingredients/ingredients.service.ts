@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Injectable } from '@nestjs/common';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
@@ -6,14 +7,13 @@ import { Ingredient, IngredientDocument } from './schemas/ingredient.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class IngredientService {
+export class ingredientService {
   findOne(id: string) {
     throw new Error('Method not implemented.');
   }
-  ingredientModel: any;
   constructor(
     @InjectModel(Ingredient.name)
-    private readonly userModel: Model<IngredientDocument>,
+    private readonly ingredientModel: Model<IngredientDocument>,
   ) {}
 
   create(createingredientDto: CreateIngredientDto) {
@@ -24,26 +24,24 @@ export class IngredientService {
     return this.ingredientModel.find().exec();
   }
 
-  async findIngredient(ingredient_Id: string): Promise<Ingredient> {
+  async findingredient(ingredient_Id: string): Promise<Ingredient> {
     return this.ingredientModel.findOne({ ingredient_Id });
   }
 
   async update(ingredient_Id: string, newingredient: UpdateIngredientDto) {
     try {
-      const ingredient = await this.findIngredient(ingredient_Id);
-      console.log(ingredient);
-      if (ingredient != null) {
-        const updateingredient = Object.assign(ingredient, newingredient);
-        return this.ingredientModel.findOneAndUpdate(
-          { ingredient_Id },
-          newingredient,
-          { new: true },
-        );
-      } else {
-        throw new Error();
+      const ingredient = await this.findingredient(ingredient_Id)
+      console.log(ingredient)
+      if(ingredient!=null){
+        const updateingredient = Object.assign(ingredient,newingredient);
+        return this.ingredientModel.findOneAndUpdate({ingredient_Id}, newingredient,{new: true});
       }
-    } catch (error) {
-      console.log(error);
+      else {
+        throw new Error()
+      }
+    }
+    catch ( error ){
+      console.log(error)
     }
   }
 
