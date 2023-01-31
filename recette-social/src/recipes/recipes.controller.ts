@@ -1,14 +1,7 @@
 /* eslint-disable prettier/prettier */
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+  Controller, Get, Post, Body, Patch, Param, Delete} from '@nestjs/common';
 import { RecipeService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -16,6 +9,7 @@ import { Put } from '@nestjs/common/decorators';
 
 @Controller('recipes')
 export class RecipesController {
+  [x: string]: any;
   constructor(private readonly recipesService: RecipeService) {}
 
   @Post()
