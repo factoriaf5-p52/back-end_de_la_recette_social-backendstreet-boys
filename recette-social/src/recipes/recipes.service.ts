@@ -6,9 +6,13 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Recipe, RecipeDocument } from './schemas/recipe.schema';
 import { Model } from 'mongoose';
+import { Ingredient } from 'src/ingredients/schemas/ingredient.schema';
 
 @Injectable()
 export class RecipeService {
+  findOne(recipe_Id: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectModel(Recipe.name)
     private readonly recipeModel: Model<RecipeDocument>,
@@ -18,12 +22,16 @@ export class RecipeService {
     return this.recipeModel.create(createRecipeDto);
   }
 
-  findAll(): Promise<Recipe[]> {
-    return this.recipeModel.find().exec();
+  async   findAll(): Promise<Recipe[]> {
+    return this.recipeModel.find()
+    .populate("ingredients")
+    .exec();
   }
 
   async findRecipe(recipe_Id: string): Promise<Recipe> {
-    return this.recipeModel.findOne({ recipe_Id });
+    return this.recipeModel.findOne({ recipe_Id:recipe_Id },{})
+    .populate("ingredients")
+    .exec();
   }
 
   async update(recipe_Id: string, newrecipe: UpdateRecipeDto) {

@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { RecipeService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -8,7 +18,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('recipes')
 @Controller('recipes')
 export class RecipesController {
-  constructor(private readonly recipesService: RecipeService) { }
+  constructor(private readonly recipesService: RecipeService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -17,13 +27,14 @@ export class RecipesController {
   }
 
   @Get()
-  findAll() {
-    return this.recipesService.findAll();
+ findAll() {    
+      return this.recipesService.findAll();
   }
 
   @Get(':recipe_Id')
   findRecipe(@Param('recipe_Id') recipe_Id: string) {
     return this.recipesService.findRecipe(recipe_Id);
+    
   }
 
   @UseGuards(JwtAuthGuard)
