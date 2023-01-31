@@ -12,4 +12,8 @@ import { Recipe, RecipeSchema } from './schemas/recipe.schema';
   controllers: [RecipesController],
   providers: [RecipeService],
 })
-export class RecipesModule {}
+export class RecipesModule {
+  createRecipe(createRecipe: any) {
+    throw new Error('Method not implemented.');
+  }
+}

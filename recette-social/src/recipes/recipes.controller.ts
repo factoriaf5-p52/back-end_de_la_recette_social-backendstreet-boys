@@ -1,4 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Controller, Get, Post, Body, Patch, Param, Delete} from '@nestjs/common';
 import { RecipeService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -8,7 +11,8 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('recipes')
 @Controller('recipes')
 export class RecipesController {
-  constructor(private readonly recipesService: RecipeService) { }
+  [x: string]: any;
+  constructor(private readonly recipesService: RecipeService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
