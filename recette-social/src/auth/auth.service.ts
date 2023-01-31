@@ -47,6 +47,7 @@ export class AuthService {
       user: findUser,
       token
     }
+
     return data;
   }
 }
